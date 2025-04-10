@@ -46,8 +46,8 @@ def jeu():
             if "correct" in reponse_ia.lower() or "bonne réponse" in reponse_ia.lower():
                 session["score"] += 1
                 session["etape"] += 1
-                if session["etape"] >= len(questions):
-                    return redirect(url_for("resultat"))
+                #if session["etape"] >= len(questions):
+                    #return redirect(url_for("resultat"))
                 return redirect(url_for("jeu"))
         except Exception as e:
             reponse_ia = f"Erreur lors de l'appel à l'API OpenAI : {e}"
