@@ -38,8 +38,12 @@
     <div class="container">
         <h3>{{ question }}</h3>
         <form method="post">
-            <textarea name="reponse" required></textarea>
-            <button type="submit">Envoyer</button>
+            {% if not validation %}
+                <textarea name="reponse" required></textarea>
+                <button type="submit">Envoyer</button>
+            {% else %}
+                <button type="submit">Continuer</button>
+            {% endif %}
         </form>
         {% if reponse_ia %}
         <div class="response">
