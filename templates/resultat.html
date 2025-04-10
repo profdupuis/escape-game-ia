@@ -1,9 +1,29 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><title>Résultat</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Résultat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #e8f0fe; margin: 0; padding: 0; }
+        .container {
+            max-width: 400px;
+            margin: 80px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 { color: #333; }
+        p { font-size: 18px; }
+    </style>
+</head>
 <body>
-    <h2>Bravo {{ prenom }} {{ nom }} !</h2>
-    <p>Ton score : {{ score }}/3</p>
+    <div class="container">
+        <h2>Bravo {{ prenom }} {{ nom }} !</h2>
+        <p>Ton score : <strong>{{ score }}/3</strong></p>
+    </div>
 </body>
 </html>
