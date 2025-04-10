@@ -1,4 +1,4 @@
-
+ ceulement si
 from flask import Flask, render_template, request, redirect, url_for, session
 import openai
 import os
@@ -35,14 +35,14 @@ def jeu():
             completion = openai.ChatCompletion.create(
                 model="gpt-4o",
                 messages=[
-                    {"role": "system", "content": "Tu es un chercheur bienveillant. Tu évalues une réponse d'élève à une question de SVT. Si c'est correct, dis-le. Si ce n'est pas correct, donne un simple indice ou une piste de réflexion, mais ne donne jamais la bonne réponse"},
+                    {"role": "system", "content": "Tu es un chercheur bienveillant. Tu évalues une réponse d'élève à une question de SVT. Si, et seulement si, la réponse est correcte, réponds en utilisant le mot 'correct' ou 'bonne réponse'. Si ce n'est pas correct, donne uniquement un indice ou une piste très succincte. Ne formule jamais une réponse complète ni un énoncé qui pourrait être considéré comme acceptable en tant que réponse."},
                     {"role": "user", "content": f"Question : {question}\nRéponse de l'élève : {user_input}"}
                 ]
             )
             reponse_ia = completion["choices"][0]["message"]["content"]
             if "correcte" in reponse_ia.lower() or "bonne réponse" in reponse_ia.lower():
                 session["score"] += 1
-            session["etape"] += 1
+                session["etape"] += 1
             if session["etape"] >= len(questions):
                 return redirect(url_for("resultat"))
         except Exception as e:
