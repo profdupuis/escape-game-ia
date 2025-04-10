@@ -1,15 +1,51 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><title>Jeu</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Jeu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #eef2f3; margin: 0; padding: 0; }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h3 { text-align: center; }
+        textarea {
+            width: 100%; height: 120px;
+            padding: 10px; font-size: 16px;
+            border-radius: 8px; border: 1px solid #ccc;
+        }
+        button {
+            width: 100%; padding: 12px;
+            background-color: #007BFF; color: white;
+            border: none; border-radius: 8px;
+            margin-top: 12px; font-size: 16px;
+        }
+        button:hover { background-color: #0056b3; }
+        .response {
+            margin-top: 20px; background: #f9f9f9;
+            padding: 10px; border-radius: 8px;
+        }
+    </style>
+</head>
 <body>
-    <h3>{{ question }}</h3>
-    <form method="post">
-        <textarea name="reponse" rows="5" cols="60" required></textarea><br>
-        <button type="submit">Envoyer</button>
-    </form>
-    {% if reponse_ia %}
-        <p><strong>Réponse de l'IA :</strong> {{ reponse_ia }}</p>
-    {% endif %}
+    <div class="container">
+        <h3>{{ question }}</h3>
+        <form method="post">
+            <textarea name="reponse" required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+        {% if reponse_ia %}
+        <div class="response">
+            <strong>Réponse de l'IA :</strong><br>{{ reponse_ia }}
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
