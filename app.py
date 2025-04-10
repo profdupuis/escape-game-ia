@@ -16,15 +16,14 @@ def accueil():
         session["prenom"] = request.form["prenom"]
         session["etape"] = 0
         session["score"] = 0
-        session["validation"] = False
+        session["reponse_ia"] = ""
         return redirect(url_for("jeu"))
     return render_template("accueil.html")
 
 @app.route("/jeu", methods=["GET", "POST"])
 def jeu():
-    reponse_ia = ""
     etape = session.get("etape", 0)
-    validation = session.get("validation", False)
+    reponse_ia = session.get("reponse_ia", "")
     questions = [
         "Explique ce qu’est la plasticité cérébrale.",
         "Donne un exemple concret de plasticité cérébrale.",
@@ -32,36 +31,30 @@ def jeu():
     ]
 
     if request.method == "POST":
-        if validation:
-            session["etape"] += 1
-            session["validation"] = False
-            return redirect(url_for("jeu"))
-        else:
-            question = questions[etape]
-            user_input = request.form["reponse"]
-            try:
-                completion = openai.ChatCompletion.create(
-                    model="gpt-4o",
-                    messages=[
-                        {"role": "system", "content": "Tu es un chercheur travaillant dans un centre de recherche en neurosciences. L'élève tente de réactiver un système de sécurité en répondant à trois questions sur la plasticité cérébrale. Tu dois évaluer chaque réponse avec bienveillance. Si, et seulement si, la réponse est correcte, utilise le mot 'correct' ou 'bonne réponse'. Sinon, donne un simple indice ou une piste très succincte. Ne donne jamais la bonne réponse ni un énoncé complet qui pourrait être considére comme une bonne réponse. }
-                        {"role": "user", "content": f"Étape {etape+1} sur 3\nQuestion : {question}\nRéponse de l'élève : {user_input}"}
-                    ]
-                )
-                reponse_ia = completion["choices"][0]["message"]["content"]
-                if "correct" in reponse_ia.lower() or "bonne réponse" in reponse_ia.lower():
-                    session["score"] += 1
-                    session["validation"] = True
-            except Exception as e:
-                reponse_ia = f"Erreur lors de l'appel à l'API OpenAI : {e}"
-
+        question = questions[etape]
+        user_input = request.form["reponse"]
+        try:
+            completion = openai.ChatCompletion.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": "Tu es un chercheur travaillant dans un centre de recherche en neurosciences. L'élève tente de réactiver un système de sécurité en répondant à trois questions sur la plasticité cérébrale. Tu dois évaluer chaque réponse avec bienveillance. Si, et seulement si, la réponse est correcte, utilise le mot 'correct' ou 'bonne réponse'. Sinon, donne un simple indice ou une piste très succincte. Ne donne jamais la bonne réponse ni un énoncé complet qui pourrait être jugé comme acceptable."},
+                    {"role": "user", "content": f"Étape {etape+1} sur 3\nQuestion : {question}\nRéponse de l'élève : {user_input}"}
+                ]
+            )
+            reponse_ia = completion["choices"][0]["message"]["content"]
+            session["reponse_ia"] = reponse_ia
+            if "correct" in reponse_ia.lower() or "bonne réponse" in reponse_ia.lower():
+                session["score"] += 1
+                session["etape"] += 1
+                if session["etape"] >= len(questions):
+                    return redirect(url_for("resultat"))
+                return redirect(url_for("jeu"))
+        except Exception as e:
+            reponse_ia = f"Erreur lors de l'appel à l'API OpenAI : {e}"
             session["reponse_ia"] = reponse_ia
 
-    if session.get("etape", 0) >= len(questions):
-        return redirect(url_for("resultat"))
-
-    question = questions[etape]
-    reponse_ia = session.get("reponse_ia", "") if validation else reponse_ia
-    return render_template("jeu.html", question=question, reponse_ia=reponse_ia, validation=validation)
+    question = questions[session["etape"]] if session["etape"] < len(questions) else ""
+    return render_template("jeu.html", question=question, reponse_ia=reponse_ia)
 
 @app.route("/resultat")
 def resultat():
