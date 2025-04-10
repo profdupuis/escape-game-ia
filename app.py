@@ -57,3 +57,6 @@ def resultat():
     nom = session.get("nom", "")
     prenom = session.get("prenom", "")
     return render_template("resultat.html", nom=nom, prenom=prenom, score=score)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
