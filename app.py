@@ -44,6 +44,7 @@ def jeu():
             if "correct" in reponse_ia.lower() or "bonne réponse" in reponse_ia.lower():
                 session["score"] += 1
                 session["etape"] += 1
+                return redirect(url_for("jeu"))
             if session["etape"] >= len(questions):
                 return redirect(url_for("resultat"))
         except Exception as e:
