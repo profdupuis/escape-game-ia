@@ -1,13 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><title>Bienvenue</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
+        .container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; }
+        input[type=text], button {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border-radius: 8px; border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50; color: white; border: none;
+            cursor: pointer;
+        }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
 <body>
-    <h2>Escape Game IA - Plasticité Cérébrale</h2>
-    <form method="post">
-        Nom : <input type="text" name="nom" required><br>
-        Prénom : <input type="text" name="prenom" required><br>
-        <button type="submit">Commencer</button>
-    </form>
+    <div class="container">
+        <h2>Escape Game IA<br>Plasticité Cérébrale</h2>
+        <form method="post">
+            <input type="text" name="nom" placeholder="Nom" required>
+            <input type="text" name="prenom" placeholder="Prénom" required>
+            <button type="submit">Commencer</button>
+        </form>
+    </div>
 </body>
 </html>
