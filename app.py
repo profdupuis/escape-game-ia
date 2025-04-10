@@ -35,7 +35,7 @@ def jeu():
             completion = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "Tu es un professeur de SVT bienveillant. Tu dois dire si la réponse est correcte, ou bien donner un petit indice, mais sans révéler toute la bonne réponse."},
+                    {"role": "system", "content": "Tu es un chercheur bienveillant. Tu évalues une réponse d'élève à une question de SVT. Si c'est correct, dis-le. Si ce n'est pas correct, donne un simple indice ou une piste de réflexion, mais ne donne jamais la bonne réponse"},
                     {"role": "user", "content": f"Question : {question}\nRéponse de l'élève : {user_input}"}
                 ]
             )
