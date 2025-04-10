@@ -36,12 +36,12 @@ def jeu():
             completion = openai.ChatCompletion.create(
                 model="gpt-4o",
                 messages=[
-                    {"role": "system", "content": "Tu es un chercheur bienveillant. Tu évalues une réponse d'élève à une question de SVT. Si, et seulement si, la réponse est correcte, réponds en utilisant le mot 'correct' ou 'bonne réponse'. Si ce n'est pas correct, donne uniquement un indice ou une piste très succincte. Ne formule jamais une réponse complète ni un énoncé qui pourrait être considéré comme acceptable en tant que réponse."},
-                    {"role": "user", "content": f"Question : {question}\nRéponse de l'élève : {user_input}"}
+                    {"role": "system", "content": "Tu es un chercheur travaillant dans un centre de recherche en neurosciences. L'élève tente de réactiver un système de sécurité en répondant à trois questions sur la plasticité cérébrale. Tu dois évaluer chaque réponse avec bienveillance. Si, et seulement si, la réponse est correcte, utilise le mot 'correct' ou 'bonne réponse'. Sinon, donne un léger indice. Ne donne jamais la bonne réponse ni un énoncé complet qui pourrait être jugé comme acceptable."},
+                    {"role": "user", "content": f"Étape {etape+1} sur 3\nQuestion : {question}\nRéponse de l'élève : {user_input}"}
                 ]
             )
             reponse_ia = completion["choices"][0]["message"]["content"]
-            if "correcte" in reponse_ia.lower() or "bonne réponse" in reponse_ia.lower():
+            if "correct" in reponse_ia.lower() or "bonne réponse" in reponse_ia.lower():
                 session["score"] += 1
                 session["etape"] += 1
             if session["etape"] >= len(questions):
