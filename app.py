@@ -37,7 +37,7 @@ def jeu():
             completion = openai.ChatCompletion.create(
                 model="gpt-4o",
                 messages=[
-                    {"role": "system", "content": "Tu es un chercheur travaillant dans un centre de recherche en neurosciences. L'élève tente de réactiver un système de sécurité en répondant à trois questions sur la plasticité cérébrale. Tu dois évaluer chaque réponse avec bienveillance. Si, et seulement si, la réponse est correcte, utilise le mot 'correct' ou 'bonne réponse'. Sinon, donne un simple indice ou une piste très succincte. Ne donne jamais la bonne réponse ni un énoncé complet qui pourrait être jugé comme acceptable."},
+                    {"role": "system", "content": "Tu es un chercheur travaillant dans un centre de recherche en neurosciences. L'élève tente de réactiver un système de sécurité en répondant à trois questions sur la plasticité cérébrale. Tu dois évaluer chaque réponse avec bienveillance. Si, et seulement si, la réponse est correcte, utilise le mot 'correct' ou 'bonne réponse' puis complete un peu sa réponse. Sinon, donne un simple indice ou une piste très succincte. Ne donne jamais la bonne réponse ni un énoncé complet qui pourrait être jugé comme acceptable."},
                     {"role": "user", "content": f"Étape {etape+1} sur 3\nQuestion : {question}\nRéponse de l'élève : {user_input}"}
                 ]
             )
