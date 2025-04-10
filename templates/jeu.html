@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Jeu</title></head>
+<body>
+    <h3>{{ question }}</h3>
+    <form method="post">
+        <textarea name="reponse" rows="5" cols="60" required></textarea><br>
+        <button type="submit">Envoyer</button>
+    </form>
+    {% if reponse_ia %}
+        <p><strong>Réponse de l'IA :</strong> {{ reponse_ia }}</p>
+    {% endif %}
+</body>
+</html>
