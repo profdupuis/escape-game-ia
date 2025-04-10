@@ -1,4 +1,3 @@
- ceulement si
 from flask import Flask, render_template, request, redirect, url_for, session
 import openai
 import os
