@@ -33,7 +33,7 @@ def jeu():
         user_input = request.form["reponse"]
         try:
             completion = openai.ChatCompletion.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "Tu es un professeur de SVT bienveillant qui évalue des réponses d'élèves."},
                     {"role": "user", "content": f"Question : {question}\nRéponse de l'élève : {user_input}\nÉvalue si la réponse est correcte ou non."}
