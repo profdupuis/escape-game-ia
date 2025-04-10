@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import openai
 import os
+import csv
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -55,6 +57,11 @@ def resultat():
     score = session.get("score", 0)
     nom = session.get("nom", "")
     prenom = session.get("prenom", "")
+    date_jeu = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ligne = [prenom, nom, score, date_jeu]
+    with open("scores.csv", "a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(ligne)
     return render_template("resultat.html", nom=nom, prenom=prenom, score=score)
 
 if __name__ == "__main__":
